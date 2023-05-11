@@ -1,0 +1,219 @@
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    
+    .queryForm{
+        padding: 10px;
+        .el-form{
+            .el-form-item{  
+                .el-form-item__label{
+                    width: 100px;
+                }
+            }
+             
+              .el-input {
+                width: 160px; 
+            }
+        }
+    }
+    .resource{
+        display: flex;
+        .resource-item{
+            height: 600px;
+            overflow-x: hidden;
+            overflow-y: auto ; 
+        } 
+        .menu{
+            .arrow{
+                margin-bottom:10px;
+            }
+        }
+        .resourcemenu{  
+            ::-webkit-scrollbar{
+                display: none;
+            }
+            .el-radio-group{ 
+            display: flex;
+            flex-direction: column;
+
+            .el-radio-button{
+                border: 1px solid #ccc;
+                border-bottom: 0px;
+                box-shadow: none;
+                
+            }
+            .el-radio-button:last-child{ 
+                    border-bottom: 1px solid #ccc; 
+            }
+             
+            .el-radio-button:first-child .el-radio-button__inner{
+                border : 0px;
+                border-radius:0px;
+            }
+            .el-radio-button:last-child .el-radio-button__inner {
+                border : 0px ;
+                 border-radius: 0px; 
+            }
+       
+            .el-radio-button__inner{
+                border:0px;
+                box-shadow: none;
+                border-radius: 0px; 
+                outline: 0;
+            }
+           }
+        }
+        .content{
+            margin-left: 10px;
+            width: 80%;
+            border:1px solid #ccc;
+            padding: 8px;
+            .details{
+                ul{
+                    list-style: none;
+                    font-size: 14px;
+                    color:#606266;
+                    padding: 0px;
+                    li{
+                       margin-bottom:10px;  
+                    }
+                }
+            }
+            width:70%;
+            .table{
+                .el-table__row{
+                    .cell{
+                        .el-radio-group{
+                            .el-radio{
+                                margin:6px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .el-dialog{
+            a{
+                text-decoration: none;
+                margin:8px;
+                color:#409EFF;
+            }
+        }
+        
+    }
+    
+  }
+.btns{
+    margin:10px;
+}
+.editDialog{
+    .roleEdit{
+        display: flex;
+        flex-wrap: wrap;
+        .edit-item{
+            width:50%;
+        }
+        .full-item{
+            width:90%;
+        }
+    }
+    .el-form{
+        .el-form-item{
+            .role{
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                // border-bottom:1px solid #ccc;
+                .roleEdit-item{
+                    width:30%;
+                }
+            }
+            .el-collapse {
+                border-bottom: none;
+            }
+
+            .el-tabs__nav-prev:hover .el-icon-arrow-left{ 
+                    color:#409EFF; 
+            }
+            .el-tabs__nav-next:hover .el-icon-arrow-right{ 
+                color:#409EFF; 
+        }
+        }
+        .el-input{
+            width:220px;
+        }
+        .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            .el-checkbox{
+                // width:30%;
+                margin:1px;
+            }
+        }
+    }
+}
+.detailDialog{
+    .block{
+        margin-bottom: 10px;
+
+      .el-row{
+        margin-bottom: 10px;
+        
+    }  
+    }
+    
+}
+.el-overlay-dialog {
+    position: relative;
+}
+
+@each $i in 0, 5, 10, 15, 20, 25, 30, 40, 50 {
+    .m#{$i} {
+        margin: #{$i}px !important;
+    }
+    .mt#{$i} {
+        margin-top: #{$i}px !important;
+    }
+    .mb#{$i} {
+        margin-bottom: #{$i}px !important;
+    }
+    .ml#{$i} {
+        margin-left: #{$i}px !important;
+    }
+    .mr#{$i} {
+        margin-right: #{$i}px !important;
+    }
+    .p#{$i} {
+        padding: #{$i}px !important;
+    }
+    .pt#{$i} {
+        padding-top: #{$i}px !important;
+    }
+    .pr#{$i} {
+        padding-right: #{$i}px !important;
+    }
+    .pb#{$i} {
+        padding-bottom: #{$i}px !important;
+    }
+    .pl#{$i} {
+        padding-left: #{$i}px !important;
+    }
+}
+
+.el-sub-menu__title{
+    height: 34px;
+    line-height: 34px;
+}
+.el-menu-item {
+    height: 34px;
+    line-height: 34px;
+}
+.el-sub-menu .el-menu-item { 
+    height: 34px;
+    line-height: 34px;
+    padding: 0 34px;
+}
+.el-tabs__header {
+    margin-bottom: 5px;
+}
