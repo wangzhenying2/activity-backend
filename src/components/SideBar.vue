@@ -31,7 +31,6 @@
 import { useStore } from 'vuex'
 import { computed, onMounted, ref, watch, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
-import { accessLog } from '@/libs/accessLog'
 import Ajax from '@/libs/Ajax'
 import { Folder } from '@element-plus/icons-vue'
 
@@ -59,7 +58,6 @@ const clearMenus = menus => {
 const collapse = computed(() => store.state.collapse )
 const items = computed(() => store.state.menuCurrent )
 const activeIndex = computed(() => store.state.selectedPage)
-console.log(123, items)
 
 
 const handleSelect = (page) => {
@@ -67,35 +65,12 @@ const handleSelect = (page) => {
     if(!page.value || (page.value === '/') || (page.value === window.location.origin) || (page.value === window.location.origin + '/')) {
         return
     }
-    // 重置random参数以刷新子页面
-    store.state.opendPages.some(item => {
-        if ((item.id == page.id) && (page.projectid !== 1)) {
-            if (item.value.indexOf('random=') === -1) {
-                item.value = item.value + '&random=' + Math.floor((Math.random() + 1) * 1000000)
-            } else {
-                item.value = item.value.split('random=')[0] + 'random=' + Math.floor((Math.random() + 1) * 1000000)
-            }
-            // item.value = 'http://fe-exodus-dev.shuyaotest.com:8084/channel/capital'
-        }
-    })
     store.commit('setSelectedPage', page.id.toString())
     const newPage = {...page}
-    // newPage.value = 'http://fe-exodus-dev.shuyaotest.com:8084/channel/capital'
+
     store.commit('saveCurrentTab', newPage)
-    if(newPage.projectid === 1) {
-        newPage.value = '/views' + page.value.replace('/right/pages', '').replace('.jsp', '')
-    } else {
-        // 发送页面访问埋点
-        accessLog({
-            url: newPage.value,
-            pageTitle: newPage.title
-        })
-        newPage.value += (newPage.value.includes('?') ? '&' : '?')+'sso_token='+localStorage.getItem('sso_token')+'&projectid='+newPage.projectid+'&menuid='+newPage.id
-    }
     store.commit('addOpendPages', newPage)
-    if(newPage.projectid === 1) {
-        router.push(newPage.value)
-    }
+    router.push(page.value)
 }
 </script>
 

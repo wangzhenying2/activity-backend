@@ -4,7 +4,9 @@ import Home from '@/views/Home.vue'
 import Layout from '@/components/Layout.vue'
 const Login = () => import('@/views/Login.vue')
 
-const AccountManage = () => import('@/views/accountManage/App.vue')
+const drawBasic = () => import('@/views/draw/basic.vue')
+const drawWay = () => import('@/views/draw/way.vue')
+const drawSets = () => import('@/views/draw/sets.vue')
 
 const routes = [
     {
@@ -27,9 +29,19 @@ const routes = [
                 component: Home
             },
             {
-                path: 'accountManage/accountManage',
-                name: 'AccountManage',
-                component: AccountManage
+                path: 'draw/basic',
+                name: 'drawBasic',
+                component: drawBasic
+            },
+            {
+                path: 'draw/way',
+                name: 'drawWay',
+                component: drawWay
+            },
+            {
+                path: 'draw/sets',
+                name: 'drawSets',
+                component: drawSets
             },
             {
                 path: ':currentPath(.*)*', // 路由未匹配到，进入这个

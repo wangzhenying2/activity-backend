@@ -15,7 +15,7 @@ export default defineConfig({
         port: '4000',
         https: false,
         proxy: {
-            '/right': 'http://localhost:8080'
+            '/draw': 'http://10.18.11.31:4100'
         }
     },
     build: {

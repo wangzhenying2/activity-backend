@@ -4,14 +4,12 @@
         <div class="">
             <v-side-bar ref="sidebar"/>
             <div class="content">
-                <!-- 此处v-if在3.2.2版本有bug：https://github.com/vuejs/core/issues/4707 -->
                 <div v-show="editableTabs.length>0">
                     <el-tabs v-model="editableTabsValue" class="tabs" type="card" closable @tab-remove="removeTab" @tab-click="selectTab">
                         <el-tab-pane v-for="item in editableTabs" :label="item.title" :name="item.id+''" :key="item.id">
-                            <iframe v-if="item.projectid !== 1" :name="'frame-'+item.id" :src="item.value" width="100%" @load="frameLoad(item)" :style="{ height: style.contHeight, overflow: 'auto' }"></iframe>
                         </el-tab-pane>
                     </el-tabs>
-                    <div v-show="currentTab.projectid === 1" :style="{ height: style.contHeight, overflow: 'auto' }">
+                    <div :style="{ height: style.contHeight, overflow: 'auto' }">
                         <router-view v-slot="{ Component }">
                             <keep-alive>
                                 <component class="view" :is="Component" />
@@ -28,7 +26,7 @@
 </template>
 
 <script setup>
-import { nextTick, computed, onUnmounted, onMounted, reactive, ref, watch } from 'vue'
+import { nextTick, computed, onMounted, reactive, ref, watch } from 'vue'
 import vHeader from '@/components/Header.vue'
 import vSideBar from '@/components/SideBar.vue'
 import Ajax from '@/libs/Ajax'
@@ -45,12 +43,6 @@ const currentTab = computed(() => store.state.currentTab)
 const editableTabsValue = ref('1')
 const style = reactive({ contHeight: '' })
 const timer = ref(null)
-
-const frameLoad = (e) => {
-    if (Array.isArray(e.childrenAuth) && e.childrenAuth.length > 0) {
-        window.frames['frame-'+e.id].postMessage(JSON.stringify(e.childrenAuth), '*')
-    }
-}
 
 watch(() => store.state.currentTab, (v, ov) => {
     editableTabsValue.value = v.id+''
@@ -89,33 +81,30 @@ const removeTab = pageId => {
 const selectTab = page => {
     const currentTab = editableTabs.value.find(e => e.id+'' === page.props.name)
     store.commit('saveCurrentTab', currentTab)
-    if(currentTab.projectid===1) {
-        router.push(currentTab.value)
-    }
+    router.push(currentTab.value)
 }
 
 // 定期刷新token
-setInterval(() => {
-    if(window.location.pathname !== '/views/login'){
-        Ajax.post('/right/user/setRefreshToken').then(() => {
-            Ajax.post('/right/user/refreshUsersToken').then(res => {
-                if (!res.success) {
-                    ElMessage({
-                        message: '登录失效，请重新登录！',
-                        onClose: () => {
-                            localStorage.removeItem('sso_token')
-                            router.push('/views/login')
-                        }
-                    })
-                }
-            })
-        })
-    }
-}, 60000)
+// setInterval(() => {
+//     if(window.location.pathname !== '/views/login'){
+//         Ajax.post('/right/user/setRefreshToken').then(() => {
+//             Ajax.post('/right/user/refreshUsersToken').then(res => {
+//                 if (!res.success) {
+//                     ElMessage({
+//                         message: '登录失效，请重新登录！',
+//                         onClose: () => {
+//                             localStorage.removeItem('sso_token')
+//                             router.push('/views/login')
+//                         }
+//                     })
+//                 }
+//             })
+//         })
+//     }
+// }, 60000)
 
 // 子系统要求重新登录
 window.addEventListener('message',function(e){
-    // console.log('postMessage:', e)
     if(e.data === 'login') {
         window.location.href = '/views/login'
     }
@@ -132,9 +121,6 @@ onMounted(() => {
         }
     }
     window.onresize()
-})
-onUnmounted(() => {
-    // window.alert('123')
 })
 
 </script>

@@ -1,4 +1,4 @@
-import {createNamespacedHelpers, createStore} from 'vuex'
+import {createStore} from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import Ajax from '../libs/Ajax'
 
@@ -13,15 +13,15 @@ export default createStore({
                 children: [{
                     id: '1',
                     title: '基础设置',
-                    value: '/drawbasic',
+                    value: '/views/draw/basic',
                 }, {
                     id: '2',
                     title: '派奖方式',
-                    value: '/drawType',
+                    value: '/views/draw/way',
                 }, {
                     id: '3',
                     title: '奖项设置',
-                    value: '/drawProd',
+                    value: '/views/draw/sets',
                 }]
             }]
         },
@@ -45,14 +45,12 @@ export default createStore({
         // 设置当前一级菜单
         setMenuCurrent(state, pid) {
             state.selectedProject = pid
-            console.log(777, state.menu.projects)
             state.menu.projects.filter(item => {
                 if (item.projectid === pid) {
                     state.menuCurrent = item.children
                     return true
                 }
             })
-            console.log(1111, state.menuCurrent)
         },
         // 设置当前二级菜单
         setSelectedPage(state, id) {
@@ -93,8 +91,6 @@ export default createStore({
     actions: {
         getSelectMenuList({state}) {
             return new Promise((resolve) => {
-                // let object = this.state.menuList.find((item) => item.index === this.state.selectedIndex)
-                // resolve(object)
                 resolve([])
             })
         },
@@ -113,7 +109,6 @@ export default createStore({
                                     property:v.property
                                 })
                             })
-                            // companylist.COMPANY_LIST_OPTS =tempArr
                             commit('saveCompanylist', tempArr)
                             resolve(tempArr)
                         }else{
@@ -126,6 +121,6 @@ export default createStore({
     },
     plugins: [createPersistedState({ // 在页面重新加载之间，补充Vuex状态。
         storage: window.sessionStorage,
-        paths: ['menu', 'selectedProject', 'selectedPage', 'opendPages', 'currentTab', 'companylist']
+        paths: ['menu', 'selectedProject', 'selectedPage', 'opendPages', 'currentTab', 'companylist', 'menuCurrent']
     })]
 })

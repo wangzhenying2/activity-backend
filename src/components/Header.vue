@@ -145,6 +145,7 @@ const submitChangePwd = () => {
 const projects = computed(() => store.state.menu.projects)
 
 const selectedId = computed(() => store.state.selectedProject)
+console.log(111, selectedId)
 // 菜单-点击
 function handleProjectClick(projectid) {
     selectedId.value = 0
